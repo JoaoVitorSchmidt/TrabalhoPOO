@@ -2,7 +2,6 @@
  * @author Gabriel de Souza Borba e João Vitor Schmidt
  */
 
-/*
 package ativPOO;
 
 import java.awt.EventQueue;
@@ -20,21 +19,20 @@ import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 
-public class apresentacao {
+public class a {
 
 	private JFrame frame;
 	private JTextField txtNmUser;
 	private JTextField txtEndereco;
-*/
+
 	/**
 	 * Launch the application.
 	 */
-/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					apresentacao window = new apresentacao();
+					a window = new a();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,13 +40,12 @@ public class apresentacao {
 			}
 		});
 	}
-*/
+
 	/**
 	 * Create the application.
 	 * @throws ParseException 
 	 */
-	/*
-	public apresentacao() throws ParseException {
+	public a() throws ParseException {
 		initialize();
 	}
 
@@ -56,16 +53,18 @@ public class apresentacao {
 	 * Initialize the contents of the frame.
 	 * @throws ParseException 
 	 */
-/*
 	private void initialize() throws ParseException {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 544, 371);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JComboBox comboBoxLinhas = new JComboBox();
+		JComboBox<String> comboBoxLinhas = new JComboBox<String>();
 		comboBoxLinhas.setBounds(381, 74, 105, 22);
 		frame.getContentPane().add(comboBoxLinhas);
+		comboBoxLinhas.addItem("Comercial");
+		comboBoxLinhas.addItem("Residencial");
+		comboBoxLinhas.addItem("Especializada");
 		
 		txtNmUser = new JTextField();
 		txtNmUser.setBounds(140, 44, 128, 20);
@@ -134,4 +133,3 @@ public class apresentacao {
 		frame.getContentPane().add(btnAdc);
 	}
 }
-*/
