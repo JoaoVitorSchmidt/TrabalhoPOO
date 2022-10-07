@@ -129,10 +129,10 @@ public class a {
 				lin.setNmUser(txtNmUser.getText());
 				lin.setNumFone(txtNumFone.getText());
 				lin.setDataInstall(txtDataInstall.getText());
-				lin.setInternet(comboBoxInternet.getSelectedItem().toString());
-				lin.setInternet(comboBoxLinhas.getSelectedItem().toString());
+				lin.setTipoLinha(comboBoxLinhas.getSelectedIndex());
+				lin.setInternet(String.valueOf(comboBoxInternet.getSelectedItem()));
 				
-				lin.showMessageDialog();
+				JOptionPane.showMessageDialog(btnAdc, "Número cadastrado com sucesso!");
 			}
 		});
 		frame.getContentPane().add(btnAdc);
