@@ -76,9 +76,11 @@ public class a {
 		txtEndereco.setColumns(10);
 		frame.getContentPane().add(txtEndereco);
 		
-		JComboBox comboBoxInternet = new JComboBox();
+		JComboBox<String> comboBoxInternet = new JComboBox<String>();
 		comboBoxInternet.setBounds(140, 168, 69, 22);
 		frame.getContentPane().add(comboBoxInternet);
+		comboBoxInternet.addItem("Sim");
+		comboBoxInternet.addItem("Não");
 		
 		JLabel labelNome = new JLabel("Nome do Usuário");
 		labelNome.setBounds(15, 44, 82, 14);
@@ -127,7 +129,10 @@ public class a {
 				lin.setNmUser(txtNmUser.getText());
 				lin.setNumFone(txtNumFone.getText());
 				lin.setDataInstall(txtDataInstall.getText());
-
+				lin.setInternet(comboBoxInternet.getSelectedItem().toString());
+				lin.setInternet(comboBoxLinhas.getSelectedItem().toString());
+				
+				lin.showMessageDialog();
 			}
 		});
 		frame.getContentPane().add(btnAdc);

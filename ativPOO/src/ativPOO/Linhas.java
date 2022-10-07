@@ -5,7 +5,7 @@ public class Linhas {
 	String nmUser;
 	String dataInstall;
 	String endereco;
-	Boolean internet;
+	String internet;
 	int tipoLinha;
 	
 	public int getTipoLinha() {
@@ -38,12 +38,10 @@ public class Linhas {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public Boolean getInternet() {
+	public String getInternet() {
 		return internet;
 	}
-	public void setInternet(Boolean internet) {
+	public void setInternet(String internet) {
 		this.internet = internet;
 	}
-	
-	
 }
