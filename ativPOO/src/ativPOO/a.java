@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JToolBar;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class apresentacao {
 
@@ -77,7 +79,9 @@ public class apresentacao {
 		frame.getContentPane().add(txtEndereco);
 		
 		JLabel lblFaturamento = new JLabel("Mensagem");
-		lblFaturamento.setBounds(327, 320, 220, 14);
+		lblFaturamento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFaturamento.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblFaturamento.setBounds(336, 310, 220, 34);
 		frame.getContentPane().add(lblFaturamento);
 		lblFaturamento.setVisible(false);
 		
@@ -141,7 +145,7 @@ public class apresentacao {
 		txtQntdOcorrencias.setVisible(false);
 		
 		JLabel lblConsultFatu = new JLabel("Consulta Faturamento da Empresa");
-		lblConsultFatu.setBounds(355, 278, 201, 28);
+		lblConsultFatu.setBounds(346, 278, 210, 28);
 		frame.getContentPane().add(lblConsultFatu);
 		
 		txtRamo = new JTextField();
@@ -254,14 +258,14 @@ public class apresentacao {
 					
 				} catch (Exception e2) {
 					
-					JOptionPane.showMessageDialog(btnAdc, "");
+					JOptionPane.showMessageDialog(null, "Erro!", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		frame.getContentPane().add(btnAdc);
 		
 		JButton btnConsultarDados = new JButton("Consultar Dados");
-		btnConsultarDados.setBounds(148, 347, 138, 23);
+		btnConsultarDados.setBounds(148, 357, 138, 23);
 		btnConsultarDados.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 				
@@ -302,7 +306,7 @@ public class apresentacao {
 		frame.getContentPane().add(btnConsultarDados);
 		
 		JButton btnFaturamento = new JButton("Consultar Faturamento");
-		btnFaturamento.setBounds(355, 345, 169, 23);
+		btnFaturamento.setBounds(362, 355, 169, 23);
 		btnFaturamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -314,7 +318,7 @@ public class apresentacao {
 					
 				}
 				
-				lblFaturamento.setText("O Potencial Faturamento da Empresa é de: R$" + faturamento);
+				lblFaturamento.setText("Potencial Faturamento: R$" + faturamento);
 				lblFaturamento.setVisible(true);
 				
 			}
