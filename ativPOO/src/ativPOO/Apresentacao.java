@@ -23,8 +23,9 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JToolBar;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.util.Objects;
 
-public class apresentacao {
+public class Apresentacao {
 
 	private JFrame frame;
 	private JTextField txtNmUser;
@@ -40,7 +41,7 @@ public class apresentacao {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					apresentacao window = new apresentacao();
+					Apresentacao window = new Apresentacao();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +54,7 @@ public class apresentacao {
 	 * Create the application.
 	 * @throws ParseException 
 	 */
-	public apresentacao() throws ParseException {
+	public Apresentacao() throws ParseException {
 		initialize();
 	}
 
@@ -233,6 +234,38 @@ public class apresentacao {
 					
 				}
 				
+				for(Linhas l : agenda) {
+					if(l.getNumFone().equals(txtNumFone.getText())) {
+						JOptionPane.showMessageDialog(null, "Esse número ja existe, favor digitar um novo.", "Erro", JOptionPane.ERROR_MESSAGE);
+						
+						throw new IllegalStateException();
+					}
+				}
+				
+				if(txtNmUser.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Favor inserir um nome!.", "Erro", JOptionPane.ERROR_MESSAGE);
+					
+					throw new IllegalStateException();
+				}
+				
+				if(txtNumFone.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isBlank()) {
+					JOptionPane.showMessageDialog(null, "Favor inserir um telefone!.", "Erro", JOptionPane.ERROR_MESSAGE);
+					
+					throw new IllegalStateException();
+				}
+				
+				if(txtEndereco.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Favor inserir um endereço!.", "Erro", JOptionPane.ERROR_MESSAGE);
+					
+					throw new IllegalStateException();
+				}
+				
+				if(txtDataInstall.getText().replace("/", "").isBlank()) {
+					JOptionPane.showMessageDialog(null, "Favor inserir uma data!.", "Erro", JOptionPane.ERROR_MESSAGE);
+					
+					throw new IllegalStateException();
+				}
+				
 				try {
 					
 					lin = new Linhas(txtNumFone.getText(), txtNmUser.getText(), txtDataInstall.getText(), txtEndereco.getText(), comboBoxLinhas.getSelectedItem().toString());
@@ -267,40 +300,43 @@ public class apresentacao {
 		JButton btnConsultarDados = new JButton("Consultar Dados");
 		btnConsultarDados.setBounds(148, 357, 138, 23);
 		btnConsultarDados.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				
-				for(Linhas lin : agenda) {
-					if(lin.getNumFone().equals(txtNumFoneConsult.getText())) {
-						
-						if(lin.getTipoLinha().equals("Especializada")) {
-
-							JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
-														 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
-														 					 "\nEndereço: " + lin.getEndereco() + "\nQntd Ocorrências: " + lin.getQntdOco() + "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
-						}else if(lin.getTipoLinha().equals("Comercial")){
+				try {
+					for(Linhas lin : agenda) {
+						if(lin.getNumFone().equals(txtNumFoneConsult.getText())) {
 							
-							JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
-				 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
-				 					 "\nEndereço: " + lin.getEndereco() + "\nRamo de Atividade: " + lin.getRamo()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
-						
-						}else if(lin.getTipoLinha().equals("Residencial")){
+							if(lin.getTipoLinha().equals("Especializada")) {
+	
+								JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
+															 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
+															 					 "\nEndereço: " + lin.getEndereco() + "\nQntd Ocorrências: " + lin.getQntdOco() + "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
+							}else if(lin.getTipoLinha().equals("Comercial")){
+								
+								JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
+					 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
+					 					 "\nEndereço: " + lin.getEndereco() + "\nRamo de Atividade: " + lin.getRamo()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
 							
-							JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
-				 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
-				 					 "\nEndereço: " + lin.getEndereco() + "\nPossuí Internet: " + lin.getInternet()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
-						
-						}else if(txtNumFoneConsult.getText().isBlank() || txtNumFoneConsult.getText().isEmpty()) {
+							}else {
+								
+								JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
+					 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
+					 					 "\nEndereço: " + lin.getEndereco() + "\nPossuí Internet: " + lin.getInternet()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
 							
-							JOptionPane.showMessageDialog(btnConsultarDados, "Favor digitar um número para ser consultado!");
+							}
+						}else if(txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isBlank()) {
+							
+							JOptionPane.showMessageDialog(null, "Favor digitar um número para ser consultado!", "Erro", JOptionPane.ERROR_MESSAGE);
 							
 						}else {
 							
-							JOptionPane.showMessageDialog(btnConsultarDados, "Favor digitar um número válido!");
+							JOptionPane.showMessageDialog(null, "Favor digitar um número válido!", "Erro", JOptionPane.ERROR_MESSAGE);
 							
 						}
 					}
+				} catch(Exception e2){
+					JOptionPane.showMessageDialog(null, "Erro!", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
-			
 			}
 		});
 		frame.getContentPane().add(btnConsultarDados);
@@ -310,17 +346,20 @@ public class apresentacao {
 		btnFaturamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				double faturamento = 0;
-				
-				for(Linhas lin : agenda) {
+				try {
+					double faturamento = 0;
 					
-					faturamento += valorLinha(lin.getTipoLinha(), lin.getQntdOco());
+					for(Linhas lin : agenda) {
+						
+						faturamento += valorLinha(lin.getTipoLinha(), lin.getQntdOco());
+						
+					}
 					
+					lblFaturamento.setText("Potencial Faturamento: R$" + faturamento);
+					lblFaturamento.setVisible(true);
+				}catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Erro!", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
-				
-				lblFaturamento.setText("Potencial Faturamento: R$" + faturamento);
-				lblFaturamento.setVisible(true);
-				
 			}
 		});
 		frame.getContentPane().add(btnFaturamento);

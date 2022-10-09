@@ -1,5 +1,3 @@
-package ativPOO;
-
 public class Linhas {
 	private String numFone;
 	private String nmUser;
