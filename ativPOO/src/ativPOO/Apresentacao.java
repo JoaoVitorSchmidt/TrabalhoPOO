@@ -5,7 +5,6 @@
 package ativPOO;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -13,24 +12,25 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.JToolBar;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import java.util.Objects;
 
 public class Apresentacao {
 
 	private JFrame frame;
 	private JTextField txtNmUser;
 	private JTextField txtEndereco;
+
+	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	
+	//Lista com as informações de todos os clientes
 	ArrayList<Linhas> agenda = new ArrayList<Linhas>();
 	private JTextField txtRamo;
 
@@ -62,7 +62,7 @@ public class Apresentacao {
 	 * Initialize the contents of the frame.
 	 * @throws ParseException 
 	 */
-	private void initialize() throws ParseException {
+private void initialize() throws ParseException {
 		
 		frame = new JFrame();
 		frame.setBounds(0, -39, 600, 460);
@@ -176,6 +176,8 @@ public class Apresentacao {
 		
 		comboBoxLinhas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				//Verificando qual linha está selecionada, para permitir ao usuário digitar as informações corretas
 				if(comboBoxLinhas.getSelectedItem().equals("Especializada")) {
 					
 					lblQntdOcorrncias.setVisible(true);
@@ -214,12 +216,15 @@ public class Apresentacao {
 			}
 		});
 		
+		//O código abaixo está realizando a adição de informações a lista
+		
 		JButton btnAdc = new JButton("Adicionar Telefone");
 		btnAdc.setBounds(202, 165, 151, 23);
 		btnAdc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Linhas lin;
 				
+				//Verificações e retornos de mensagens conforme certos erros
 				if(txtQntdOcorrencias.getText().isBlank() && comboBoxLinhas.getSelectedItem().equals("Especializada")) {
 					
 					JOptionPane.showMessageDialog(null, "Digite alguma ocorrência!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -235,7 +240,9 @@ public class Apresentacao {
 				}
 				
 				for(Linhas l : agenda) {
+					
 					if(l.getNumFone().equals(txtNumFone.getText())) {
+						
 						JOptionPane.showMessageDialog(null, "Esse número ja existe, favor digitar um novo.", "Erro", JOptionPane.ERROR_MESSAGE);
 						
 						throw new IllegalStateException();
@@ -266,6 +273,7 @@ public class Apresentacao {
 					throw new IllegalStateException();
 				}
 				
+				//Adicionando informações a lista, conforme a linha selecionada
 				try {
 					
 					lin = new Linhas(txtNumFone.getText(), txtNmUser.getText(), txtDataInstall.getText(), txtEndereco.getText(), comboBoxLinhas.getSelectedItem().toString());
@@ -297,50 +305,71 @@ public class Apresentacao {
 		});
 		frame.getContentPane().add(btnAdc);
 		
+		//O código abaixo está consultando os dados referente ao número digitado
+		
 		JButton btnConsultarDados = new JButton("Consultar Dados");
 		btnConsultarDados.setBounds(148, 357, 138, 23);
 		btnConsultarDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+                Boolean c = false;
+
 				try {
+					
 					for(Linhas lin : agenda) {
+						
+					  for (Linhas linhas : agenda) {
+						  
+                            if(linhas.getNumFone().equals(txtNumFoneConsult.getText())){
+                            	
+                                c = true;
+                                
+                            }
+                        }
+						
 						if(lin.getNumFone().equals(txtNumFoneConsult.getText())) {
 							
 							if(lin.getTipoLinha().equals("Especializada")) {
 	
 								JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
 															 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
-															 					 "\nEndereço: " + lin.getEndereco() + "\nQntd Ocorrências: " + lin.getQntdOco() + "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
+															 					 "\nEndereço: " + lin.getEndereco() + "\nQntd Ocorrências: " + lin.getQntdOco() + "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco(), lin.getDataInstall()));
 							}else if(lin.getTipoLinha().equals("Comercial")){
 								
 								JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
 					 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
-					 					 "\nEndereço: " + lin.getEndereco() + "\nRamo de Atividade: " + lin.getRamo()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
+					 					 "\nEndereço: " + lin.getEndereco() + "\nRamo de Atividade: " + lin.getRamo()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco(), lin.getDataInstall()));
 							
 							}else {
 								
 								JOptionPane.showMessageDialog(btnConsultarDados, "Número do Fone: " + lin.getNumFone() +"\nNome do Usuário: " + lin.getNmUser() + 
 					 					 "\nTipo de Linha: " + lin.getTipoLinha() + "\nData de Instalação: " + lin.getDataInstall() + 
-					 					 "\nEndereço: " + lin.getEndereco() + "\nPossuí Internet: " + lin.getInternet()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco()));
+					 					 "\nEndereço: " + lin.getEndereco() + "\nPossuí Internet: " + lin.getInternet()+ "\nValor Básico a pagar: R$" + valorLinha(lin.getTipoLinha(), lin.getQntdOco(),lin.getDataInstall() ));
 							
 							}
-						}else if(txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isBlank()) {
+						}else if(txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isBlank() || txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isEmpty()) {
 							
 							JOptionPane.showMessageDialog(null, "Favor digitar um número para ser consultado!", "Erro", JOptionPane.ERROR_MESSAGE);
 							
-						}else {
-							
-							JOptionPane.showMessageDialog(null, "Favor digitar um número válido!", "Erro", JOptionPane.ERROR_MESSAGE);
-							
 						}
 					}
+					
+					if (c == false){
+						
+						JOptionPane.showMessageDialog(btnConsultarDados, "Favor digitar um número válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+						
+					}
+					
 				} catch(Exception e2){
+					
 					JOptionPane.showMessageDialog(null, "Erro!", "Erro", JOptionPane.ERROR_MESSAGE);
+					
 				}
 			}
 		});
 		frame.getContentPane().add(btnConsultarDados);
 		
+		//Este botão está mostrando qual o Potencial Faturamento da empresa, conforme os números já salvos na Lista
 		JButton btnFaturamento = new JButton("Consultar Faturamento");
 		btnFaturamento.setBounds(362, 355, 169, 23);
 		btnFaturamento.addActionListener(new ActionListener() {
@@ -351,23 +380,28 @@ public class Apresentacao {
 					
 					for(Linhas lin : agenda) {
 						
-						faturamento += valorLinha(lin.getTipoLinha(), lin.getQntdOco());
+						faturamento += valorLinha(lin.getTipoLinha(), lin.getQntdOco(), lin.getDataInstall());
 						
 					}
 					
 					lblFaturamento.setText("Potencial Faturamento: R$" + faturamento);
 					lblFaturamento.setVisible(true);
 				}catch (Exception e2) {
+					
 					JOptionPane.showMessageDialog(null, "Erro!", "Erro", JOptionPane.ERROR_MESSAGE);
+					
 				}
 			}
 		});
 		frame.getContentPane().add(btnFaturamento);
 	}
-	
-	public double valorLinha(String s, Integer i) {
+
+	//Este método está calculando qual o valor do Potencial Faturamento da Empresa
+	public double valorLinha(String s, Integer i, String dataIn) throws ParseException{
 		
 		double v;
+		Date data = formato.parse("01/01/2019");
+		Date dataRecebida = formato.parse(dataIn);
 		
 		switch (s) {
 		case "Residencial":
@@ -375,7 +409,13 @@ public class Apresentacao {
 		break;
 		
 		case "Comercial":
-			v = 25.00;
+			
+			if(dataRecebida.before(data)) {
+				v = 25.00;
+			}else {
+				v = 37.50;
+			}
+			
 		break;
 		
 		default:
