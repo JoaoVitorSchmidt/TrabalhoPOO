@@ -312,18 +312,17 @@ private void initialize() throws ParseException {
 		btnConsultarDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-                Boolean c = false;
+                Boolean existe = false;
 
 				try {
 					
 					for(Linhas lin : agenda) {
 						
-					  for (Linhas linhas : agenda) {
+					  for (Linhas l : agenda) {
 						  
-                            if(linhas.getNumFone().equals(txtNumFoneConsult.getText())){
+                            if(l.getNumFone().equals(txtNumFoneConsult.getText())){
                             	
-                                c = true;
-                                
+                                existe = true;
                             }
                         }
 						
@@ -349,21 +348,24 @@ private void initialize() throws ParseException {
 							}
 						}else if(txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isBlank() || txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isEmpty()) {
 							
-							JOptionPane.showMessageDialog(null, "Favor digitar um número para ser consultado!", "Erro", JOptionPane.ERROR_MESSAGE);
+							throw new NullPointerException();
+						}else if (existe == false) {
 							
+							throw new IllegalStateException();
 						}
-					}
-					
-					if (c == false){
-						
-						JOptionPane.showMessageDialog(btnConsultarDados, "Favor digitar um número válido!", "Erro", JOptionPane.ERROR_MESSAGE);
-						
 					}
 					
 				} catch(Exception e2){
 					
-					JOptionPane.showMessageDialog(null, "Erro!", "Erro", JOptionPane.ERROR_MESSAGE);
-					
+					if(txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isBlank() || txtNumFoneConsult.getText().replace("(", "").replace(")", "").replace(" ", "").replace("-", "").isEmpty()) {
+						
+						JOptionPane.showMessageDialog(null, "Favor digitar um número para ser consultado!", "Erro", JOptionPane.ERROR_MESSAGE);
+						
+					}else {
+						
+						JOptionPane.showMessageDialog(btnConsultarDados, "Favor digitar um número válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+						
+					}
 				}
 			}
 		});
