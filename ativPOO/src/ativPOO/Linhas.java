@@ -1,3 +1,5 @@
+package ativPOO;
+
 public class Linhas {
 	private String numFone;
 	private String nmUser;
@@ -8,6 +10,7 @@ public class Linhas {
 	private Integer qntdOco;
 	private String ramo;
 
+	//Contrutor para o objeto lin na Classe Apresentacao
 	public Linhas(String numFone, String nmUser, String dataInstall, String endereco,  String tipoLinha) {
 		this.setNumFone(numFone);
 		this.setNmUser(nmUser);
@@ -16,6 +19,7 @@ public class Linhas {
 		this.setTipoLinha(tipoLinha);
 	}
 	
+	//Getters and Setters
 	public String getTipoLinha() {
 		return tipoLinha;
 	}
